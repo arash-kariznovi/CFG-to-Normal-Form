@@ -67,6 +67,7 @@ class NormalForm:
                 if j in Vn:
                     print( "%s is in LAMBDA group"%(j))
 
+# Add productions to Self.productions
 
 
 
