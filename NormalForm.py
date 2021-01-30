@@ -8,6 +8,7 @@ class NormalForm:
         self.variables = variables
         right = []
         self.right = right
+
     #every product in a array
     # [0] is variables in left and
     # [1] is terminal or variables in right
@@ -68,7 +69,10 @@ class NormalForm:
                     print( "%s is in LAMBDA group"%(j))
 
 # Add productions to Self.productions
+        self.productions = []
 
+        for i in newProduction:
+            self.productions.append(i)
 
 
     def remove_unit(self):
@@ -149,4 +153,8 @@ class NormalForm:
                 self.productions.remove(i)
         print(self.productions)
 
-
+    def output(self):
+        print = ""
+        for i in self.productions:
+            print += (i[0]+'->'+i[1]+'\n')
+        return  print
