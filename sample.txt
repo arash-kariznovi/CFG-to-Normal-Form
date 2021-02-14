@@ -1,3 +1,4 @@
-A->B
-B->e
-S->a
+S->ABC
+A->a
+B->b
+C->c

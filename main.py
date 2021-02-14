@@ -1,5 +1,6 @@
 import NormalForm as NF
 import PySimpleGUI as sg
+import Chomsky as Ch
 
 
 if __name__ == '__main__':
@@ -7,27 +8,27 @@ if __name__ == '__main__':
 #Gui: Using PySimpleGui
 
 #layout
-    layout =[[sg.Text("Welcome to the Converter!", size=(500, 1), font=("Helvetica", 25), text_color='white',justification='center')],
-                [sg.Text("Enter Number of Productions:",justification="left"),
-                    sg.InputText(size=(3, 1))],
+    layout =[
+                [sg.Text("Welcome to the Converter!", size=(500, 1), font=("Helvetica", 25), text_color='white',justification='center')],
+                [sg.Text("Enter Number of Productions:",justification="left"),sg.InputText(size=(3, 1))],
                 [sg.Text("Enter Productions and Submit:")],
-                [sg.Multiline(default_text='First Read the Notes:'
-                                           '\n 1. Write every production in 1 line after erasing these notes'
-                                           '\n 2. lambda = e ', size=(100,10))],
+                [sg.Multiline(default_text='First Read the Notes:''\n 1. Write every production in 1 line after erasing these notes'
+                    '\n 2. lambda = e ', size=(100,10))],
                 [sg.Submit()],
                 [sg.Text("Choose the Method:")],
                 [sg.Button("Remove Lambda"),
-                    sg.Button("Remove Useless"),
-                    sg.Button("Remove Unit")],
-                [sg.Button("Chomsky Form"),
-                    sg.Button("Greibach Form")],
-             [sg.Text("Click to See the Result:")],
-                [sg.Button("Apply")],
-                [sg.Text("Developed by Arash Kariznovi.", size=(500, 1), font=("Helvetica", 10), text_color='white',justification='center')]
+                sg.Button("Remove Useless"),
+                sg.Button("Remove Unit")],
 
+                [sg.Button("Normal Form"),
+                sg.Button("Chomsky Form"),
+                sg.Button("Greibach Form")],
+
+                [sg.Text("Developed by Arash Kariznovi.", size=(500, 1),
+                font=("Helvetica", 10), text_color='white',justification='center')]
             ]
 # create window
-    window = sg.Window(title="CFG Converter", layout=layout, margins=(10, 10), size=(500, 480))
+    window = sg.Window(title="CFG Converter", layout=layout, margins=(10, 10), size=(500, 420))
 
 
     while True:
@@ -42,30 +43,37 @@ if __name__ == '__main__':
         f.close()
 
         a_file = open("sample.txt", "r")
-
         product = []
         for line in a_file:
             stripped_line = line.strip()
             product.append(stripped_line)
-
         a_file.close()
 
-        print(product)
-
-        grammar1 = NF.NormalForm(product, product_numbers)
+        if event == "Chomsky Form":
+            Chmsk = Ch.Chomsky(product, product_numbers)
+        else:
+            grammar1 = NF.NormalForm(product, product_numbers)
 
         if event == "Remove Lambda":
             grammar1.remove_lambda()
+            sg.popup(grammar1.output(),title="out")
         elif event == "Remove Useless":
             grammar1.remove_useless()
+            sg.popup(grammar1.output(), title="out")
         elif event == "Remove Unit":
             grammar1.remove_unit()
-
+            sg.popup(grammar1.output(), title="out")
+        elif event == "Normal Form":
+            grammar1.remove_lambda()
+            grammar1.remove_useless()
+            grammar1.remove_unit()
+            sg.popup(grammar1.output(), title="output")
+        # elif event == "Chomsky Form":
+        #     Chmsk = Ch.Chomsky(product,product_numbers)
         if event == sg.WIN_CLOSED:
             break
 
-        if event == 'Apply':
-            sg.popup(product)
+
 
 
 

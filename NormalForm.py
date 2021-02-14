@@ -8,6 +8,7 @@ class NormalForm:
         self.variables = variables
         right = []
         self.right = right
+
     #every product in a array
     # [0] is variables in left and
     # [1] is terminal or variables in right
@@ -17,7 +18,7 @@ class NormalForm:
             self.variables.append(l)
         for i in range(self.product_numbers):
            self.productions[i] = [self.variables[i],self.right[i]]
-        #print(self.productions)
+
 
 
     #Remove lambda productions
@@ -28,7 +29,7 @@ class NormalForm:
         for i in range(len(self.productions)):
             if self.productions[i][1] == 'e':
                 Vn.append(self.productions[i][0])
-        #print(Vn)
+
 
         #find variable that produces lambda indirectly
         size = 0
@@ -46,10 +47,10 @@ class NormalForm:
                     if flag==1:
                         break
                 if(flag == 1):
-                    #print("not indirect lambda")
+
                     pass
                 else:
-                    #print("Indirect lambda")
+
                     Vn.append(self.productions[k][0])
             size = size +1
         Vn =list(dict.fromkeys(Vn))
@@ -67,7 +68,11 @@ class NormalForm:
                 if j in Vn:
                     print( "%s is in LAMBDA group"%(j))
 
+# Add productions to Self.productions
+        self.productions = []
 
+        for i in newProduction:
+            self.productions.append(i)
 
 
     def remove_unit(self):
@@ -148,4 +153,8 @@ class NormalForm:
                 self.productions.remove(i)
         print(self.productions)
 
-
+    def output(self):
+        print = ""
+        for i in self.productions:
+            print += (i[0]+'->'+i[1]+'\n')
+        return  print
